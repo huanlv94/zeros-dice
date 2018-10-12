@@ -7,4 +7,5 @@ Casino game in blockchain with solidity
     yarn start
   ```
   Visit `http://localhost:8080`
- 
+
+  - This game current only available on ropsten testnet.
