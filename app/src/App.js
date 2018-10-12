@@ -111,6 +111,20 @@ export default class App extends React.Component {
     }
   }
 
+  watchResultBet() {
+    const { casinoInstance } = this.state
+    const wonEvent = casinoInstance.Won({}, {fromBlock: 0, toBlock: 'latest'});
+    wonEvent.watch((err, result) => {
+      console.log('ERROR: ', err)
+      console.log('RESULT: ', result)
+      if (err) {
+        console.log('could not get event Won()')
+      } else {
+        alert('Almost done!!!, You take amount: ' + parseInt(result.args._amount, 10))
+      }
+    })
+  }
+
   voteNumber(number) {
     let bet = this.refs['ether-bet'].value
     const {
@@ -130,6 +144,7 @@ export default class App extends React.Component {
         value: web3.utils.toWei(bet.toString(), 'ether')
       }).then((result) => {
         this.callbackVoteNumber()
+        this.watchResultBet()
       })
     }
   }
