@@ -1,0 +1,17 @@
+{
+  "name": "huan-casino",
+  "version": "1.0.0",
+  "description": "Simple game with blockchain",
+  "main": "index.js",
+  "repository": "git@github.com:lehuan94cntt/huan-casino.git",
+  "author": "Huân LV <lehuan94cntt@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "dotenv": "^6.1.0",
+    "ethereumjs-wallet": "^0.6.2"
+  },
+  "dependencies": {
+    "truffle-wallet-provider": "^0.0.5"
+  }
+}
