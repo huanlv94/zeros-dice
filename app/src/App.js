@@ -77,13 +77,6 @@ export default class App extends React.Component {
         })
       }
     })
-    casinoInstance.maxAmountOfBets().then((result) => {
-      if (result != null) {
-        this.setState({
-          maxAmountOfBets: parseInt(result.toString())
-        })
-      }
-    })
     casinoInstance.numberWinner().then((result) => {
       if (result != null) {
         this.setState({
