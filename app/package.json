@@ -1,0 +1,33 @@
+{
+  "name": "cassino-app",
+  "version": "0.1.0",
+  "private": true,
+  "author": "lehuan94cntt@gmail.conm",
+  "dependencies": {
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-scripts": "2.0.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "string_decoder": "^1.1.1",
+    "truffle": "^4.1.14",
+    "truffle-contract": "^3.0.6",
+    "truffle-hdwallet-provider": "0.0.5",
+    "web3": "^1.0.0-beta.36"
+  }
+}
