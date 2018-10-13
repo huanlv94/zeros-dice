@@ -19,6 +19,8 @@ export default class App extends React.Component {
       minimumBet: 0,
       totalBet: 0,
       maxAmountOfBets: 0,
+      pending: false,
+      betResults: []
     }
 
     window.currentState = this.state
@@ -117,15 +119,23 @@ export default class App extends React.Component {
   }
 
   watchResultBet() {
-    const { casinoInstance } = this.state
-    const wonEvent = casinoInstance.Won({}, {fromBlock: 0, toBlock: 'latest'});
+    const {
+      casinoInstance,
+      betResults
+    } = this.state
+    const wonEvent = casinoInstance.Won();
     wonEvent.watch((err, result) => {
       console.log('ERROR: ', err)
       console.log('RESULT: ', result)
+      this.setState({ pending: false })
       if (err) {
+        alert('Something wrong !!!, please try again later !')
         console.log('could not get event Won()')
       } else {
-        alert('Almost done!!!, You take amount: ' + parseInt(result.args._amount, 10))
+        let checkExits = betResults.filter((item) => item.blockNumber === result.blockNumber)
+        if (checkExits.length == 0)
+          betResults.push(result)
+          this.setState({ betResults })
       }
     })
   }
@@ -143,6 +153,7 @@ export default class App extends React.Component {
       alert('You must bet more than the minimum')
       this.callbackVoteNumber()
     } else {
+      this.setState({ pending: true })
       casinoInstance.bet(number, {
         gas: 300000,
         from: this.state.accounts[0],
@@ -155,6 +166,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    const { pending, betResults } = this.state
     return (
       <div className="main-container">
       <AppBar position='static'>
@@ -206,7 +218,25 @@ export default class App extends React.Component {
             <li>10</li>
           </ul>
         </div>
-        
+        <div className='container-bet-result'>
+          {pending &&
+            <div>
+              <img src={require('./assets/images/loading.svg')} />
+              <span>Waiting for other bet......</span>
+            </div>
+          }
+          {betResults.length > 0 &&
+            <div>
+              <h2>Result:</h2>
+              {betResults.map((result, key) =>
+                <div className='bet-result' key={key}>
+                  <p>{result.args._status ? 'YOU WON' : 'YOU LOSE'}</p>
+                  <p>Won amount: {parseFloat(result.args._amount, 10)} EHT.</p>
+                </div>
+              )}
+            </div>
+          }
+        </div>
       </div>
     )
   }
