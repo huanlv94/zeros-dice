@@ -1,4 +1,9 @@
 import React from 'react'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import Input from '@material-ui/core/Input';
+
 import getWeb3 from './utils/getWeb3'
 import HuanCasino from './resources/contracts/HuanCasino.json'
 
@@ -152,46 +157,56 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="main-container">
-        <h1>Bet for your best number and win huge amounts of Ether</h1>
-        <div className="block">
-          <b>Number of bets:</b> &nbsp;
-          <span>{this.state.numberOfBets}</span>
+      <AppBar position='static'>
+        <Toolbar className="toolBar">
+          <Typography variant="title" className="toolBarText" variant="h4">
+             ZeroS Dice - The destiny is in your hand
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
+        <div className="main-container-content">
+          <h1>Bet for your best number and win huge amounts of Ether</h1>
+          <div className="block">
+            <b>Number of bets:</b> &nbsp;
+            <span>{this.state.numberOfBets}</span>
+          </div>
+          <div className="block">
+            <b>Last number winner:</b> &nbsp;
+            <span>{this.state.lastWinner}</span>
+          </div>
+          <div className="block">
+            <b>Total ether bet:</b> &nbsp;
+            <span>{this.state.totalBet} ether</span>
+          </div>
+          <div className="block">
+            <b>Minimum bet:</b> &nbsp;
+            <span>{this.state.minimumBet} ether</span>
+          </div>
+          <div className="block">
+            <b>Max amount of bets:</b> &nbsp;
+            <span>{this.state.maxAmountOfBets}</span>
+          </div>
+          <hr/>
+          <h2>Vote for the next number</h2>
+          <label>
+          <b>How much Ether do you want to bet? <input className="bet-input" ref="ether-bet" type="number" placeholder={this.state.minimumBet}/></b> ether
+          <br/>
+          </label>
+          <ul ref="numbers" className="numberList">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+          </ul>
         </div>
-        <div className="block">
-          <b>Last number winner:</b> &nbsp;
-          <span>{this.state.lastWinner}</span>
-        </div>
-        <div className="block">
-          <b>Total ether bet:</b> &nbsp;
-          <span>{this.state.totalBet} ether</span>
-        </div>
-        <div className="block">
-          <b>Minimum bet:</b> &nbsp;
-          <span>{this.state.minimumBet} ether</span>
-        </div>
-        <div className="block">
-          <b>Max amount of bets:</b> &nbsp;
-          <span>{this.state.maxAmountOfBets}</span>
-        </div>
-        <hr/>
-        <h2>Vote for the next number</h2>
-        <label>
-        <b>How much Ether do you want to bet? <input className="bet-input" ref="ether-bet" type="number" placeholder={this.state.minimumBet}/></b> ether
-        <br/>
-        </label>
-        <ul ref="numbers">
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
-          <li>4</li>
-          <li>5</li>
-          <li>6</li>
-          <li>7</li>
-          <li>8</li>
-          <li>9</li>
-          <li>10</li>
-        </ul>
-        <hr/>
+        
       </div>
     )
   }
