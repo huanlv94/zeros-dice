@@ -2,7 +2,6 @@ import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import Input from '@material-ui/core/Input';
 
 import getWeb3 from './utils/getWeb3'
 import HuanCasino from './resources/contracts/HuanCasino.json'
@@ -18,7 +17,7 @@ export default class App extends React.Component {
       numberOfBets: 0,
       minimumBet: 0,
       totalBet: 0,
-      maxAmountOfBets: 0,
+      maxAmountOfBets: null,
       pending: false,
       betResults: []
     }
@@ -197,7 +196,7 @@ export default class App extends React.Component {
           </div>
           <div className="block">
             <b>Max amount of bets:</b> &nbsp;
-            <span>{this.state.maxAmountOfBets}</span>
+            <span>{this.state.maxAmountOfBets || 'Unlimited'}</span>
           </div>
           <hr/>
           <h2>Vote for the next number</h2>
@@ -221,8 +220,10 @@ export default class App extends React.Component {
         <div className='container-bet-result'>
           {pending &&
             <div>
-              <img src={require('./assets/images/loading.svg')} />
-              <span>Waiting for other bet......</span>
+              <p>
+                <img src={require('./assets/images/loading.svg')} width='70px' />
+              </p>
+              <span className='bet-edge-house' style={{color: '#d1ffe6'}}>Waiting bet of edge house......</span>
             </div>
           }
           {betResults.length > 0 &&

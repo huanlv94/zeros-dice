@@ -41,11 +41,12 @@ li:active {
 }
 
 .main-container {
-  /* background: url('./assets/images/casino-background.jpg'); */
+  /* background: url('./assets/images/casino-background.jpg') no-repeat; */
   background: #444444;
   width: 100%;
-  height: 1000px;
-  background-repeat: no-repeat;
+  height: auto;
+  text-align: center;
+  min-height: 100vh;
 }
 .main-container h1 {
   color: #fff;
