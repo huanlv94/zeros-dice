@@ -31,7 +31,7 @@ contract HuanCasino {
   mapping(address => Player) public playerInfo;
 
   // Event watch when player win
-  event Won(bool _status, uint _amount);
+  event Won(bool _status, address _address, uint _amount);
 
   constructor(uint256 _minimumBet) public payable {
     owner = msg.sender;
@@ -92,20 +92,21 @@ contract HuanCasino {
   function distributePrizes(uint256 numberWin) public {
     address[100] memory winners;
     uint256 count = 0;
+    uint256 winnerEtherAmount = totalBet/winners.length;
+
     for (uint256 i = 0; i < players.length; i++) {
       address playerAddress = players[i];
       if (playerInfo[playerAddress].numberSelected == numberWin) {
         winners[count] = playerAddress;
         count++;
-        emit Won(true, winnerEtherAmount);
+        emit Won(true, playerAddress, winnerEtherAmount);
       } else {
-        emit Won(false, 0);
+        emit Won(false, playerAddress, 0);
       }
       delete playerInfo[playerAddress];
     }
 
     players.length = 0;
-    uint256 winnerEtherAmount = totalBet/winners.length;
 
     for (uint256 j = 0; j < winners.length; j++){
       if (winners[j] != address(0))

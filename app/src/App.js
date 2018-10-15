@@ -131,8 +131,10 @@ export default class App extends React.Component {
         alert('Something wrong !!!, please try again later !')
         console.log('could not get event Won()')
       } else {
-        let checkExits = betResults.filter((item) => item.blockNumber === result.blockNumber)
-        if (checkExits.length == 0)
+        let checkExits = betResults.filter((item) =>
+          item.blockNumber === result.blockNumber
+        )
+        if (checkExits.length === 0)
           betResults.push(result)
           this.setState({ betResults })
       }
@@ -162,6 +164,12 @@ export default class App extends React.Component {
         this.watchResultBet()
       })
     }
+  }
+
+  parseWeiToEth(wei) {
+    const { web3 } = this.state
+    let result = wei ? web3.utils.fromWei(wei, 'ether') : 0
+    return parseFloat(result)
   }
 
   render() {
@@ -232,7 +240,7 @@ export default class App extends React.Component {
               {betResults.map((result, key) =>
                 <div className='bet-result' key={key}>
                   <p>{result.args._status ? 'YOU WON' : 'YOU LOSE'}</p>
-                  <p>Won amount: {parseFloat(result.args._amount, 10)} EHT.</p>
+                  <p>Won amount: {this.parseWeiToEth(result.args._amount)} ETH.</p>
                 </div>
               )}
             </div>
