@@ -50,7 +50,6 @@ export default class App extends React.Component {
     const { web3 } = this.state
     let huanCasinoContract = contract(HuanCasino)
     huanCasinoContract.setProvider(web3.currentProvider)
-
     huanCasinoContract.deployed().then(instance => {
       const casinoInstance = instance
       this.setState({ casinoInstance })
