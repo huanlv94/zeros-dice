@@ -4,7 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 
 import getWeb3 from './utils/getWeb3'
-import HuanCasino from './resources/contracts/HuanCasino.json'
+import HuanCasino from './contracts/HuanCasino.json'
 
 const contract = require('truffle-contract')
 
