@@ -91,26 +91,33 @@ contract HuanCasino {
   /// players for the next game and resets the `totalBet` and `numberOfBets`
   function distributePrizes(uint256 numberWin) public {
     address[100] memory winners;
-    uint256 count = 0;
-    uint256 winnerEtherAmount = totalBet/winners.length;
+    address[100] memory losers;
+    uint256 countWin = 0;
+    uint256 countLose = 0;
 
     for (uint256 i = 0; i < players.length; i++) {
       address playerAddress = players[i];
       if (playerInfo[playerAddress].numberSelected == numberWin) {
-        winners[count] = playerAddress;
-        count++;
-        emit Won(true, playerAddress, winnerEtherAmount);
+        winners[countWin] = playerAddress;
+        countWin++;
       } else {
-        emit Won(false, playerAddress, 0);
+        losers[countLose] = playerAddress;
+        countLose++;
       }
       delete playerInfo[playerAddress];
     }
 
-    players.length = 0;
+    uint256 winnerEtherAmount = totalBet/winners.length;
 
     for (uint256 j = 0; j < winners.length; j++){
       if (winners[j] != address(0))
         winners[j].transfer(winnerEtherAmount);
+        emit Won(true, winners[j], winnerEtherAmount);
+    }
+
+    for (uint256 l = 0; l < losers.length; l++){
+      if (losers[l] != address(0))
+        emit Won(false, losers[l], 0);
     }
 
     resetData();
