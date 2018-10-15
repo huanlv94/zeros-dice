@@ -41,8 +41,7 @@ li:active {
 }
 
 .main-container {
-  /* background: url('./assets/images/casino-background.jpg') no-repeat; */
-  background: #444444;
+  background: url('./assets/images/casino-background.jpg') no-repeat;
   width: 100%;
   height: auto;
   text-align: center;

@@ -231,7 +231,7 @@ export default class App extends React.Component {
               <p>
                 <img src={require('./assets/images/loading.svg')} width='70px' />
               </p>
-              <span className='bet-edge-house' style={{color: '#d1ffe6'}}>Waiting bet of edge house......</span>
+              <span className='bet-edge-house' style={{color: '#d1ffe6'}}>Waiting for another bet of edge house......</span>
             </div>
           }
           {betResults.length > 0 &&
