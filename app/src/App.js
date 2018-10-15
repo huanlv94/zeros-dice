@@ -132,8 +132,8 @@ export default class App extends React.Component {
         console.log('could not get event Won()')
         this.setState({ pending: false })
       } else {
-        let resultAddress = result.args._address.toString().toLocaleLowerCase
-        let localAddress = accounts[0].toString().toLocaleLowerCase
+        let resultAddress = result.args._address.toString().toLocaleLowerCase()
+        let localAddress = accounts[0].toString().toLocaleLowerCase()
         if (resultAddress === localAddress) {
           let checkExits = betResults.filter((item) =>
             item.blockNumber === result.blockNumber

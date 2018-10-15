@@ -74,7 +74,7 @@ contract HuanCasino {
     numberOfBets++;
     players.push(msg.sender);
     totalBet += msg.value;
-    if (numberOfBets >= maximumBetsNr) 
+    if (numberOfBets >= maximumBetsNr)
       generateNumberWinner();
     //We need to change this in order to be secure
   }
@@ -110,9 +110,10 @@ contract HuanCasino {
     uint256 winnerEtherAmount = totalBet/winners.length;
 
     for (uint256 j = 0; j < winners.length; j++){
-      if (winners[j] != address(0))
+      if (winners[j] != address(0)) {
         winners[j].transfer(winnerEtherAmount);
         emit Won(true, winners[j], winnerEtherAmount);
+      }
     }
 
     for (uint256 l = 0; l < losers.length; l++){
