@@ -120,23 +120,29 @@ export default class App extends React.Component {
   watchResultBet() {
     const {
       casinoInstance,
-      betResults
+      betResults,
+      accounts
     } = this.state
     const wonEvent = casinoInstance.Won();
     wonEvent.watch((err, result) => {
       console.log('ERROR: ', err)
       console.log('RESULT: ', result)
-      this.setState({ pending: false })
       if (err) {
         alert('Something wrong !!!, please try again later !')
         console.log('could not get event Won()')
+        this.setState({ pending: false })
       } else {
-        let checkExits = betResults.filter((item) =>
-          item.blockNumber === result.blockNumber
-        )
-        if (checkExits.length === 0)
-          betResults.push(result)
-          this.setState({ betResults })
+        let resultAddress = result.args._address.toString().toLocaleLowerCase
+        let localAddress = accounts[0].toString().toLocaleLowerCase
+        if (resultAddress === localAddress) {
+          let checkExits = betResults.filter((item) =>
+            item.blockNumber === result.blockNumber
+          )
+          if (checkExits.length === 0)
+            betResults.push(result)
+            this.setState({ betResults })
+            this.setState({ pending: false })
+        }
       }
     })
   }
@@ -160,15 +166,16 @@ export default class App extends React.Component {
         from: this.state.accounts[0],
         value: web3.utils.toWei(bet.toString(), 'ether')
       }).then((result) => {
-        this.callbackVoteNumber()
-        this.watchResultBet()
+        if (result)
+          this.callbackVoteNumber()
+          this.watchResultBet()
       })
     }
   }
 
   parseWeiToEth(wei) {
     const { web3 } = this.state
-    let result = wei ? web3.utils.fromWei(wei, 'ether') : 0
+    let result = wei ? web3.utils.fromWei(wei.toString(), 'ether') : 0
     return parseFloat(result)
   }
 
@@ -176,13 +183,13 @@ export default class App extends React.Component {
     const { pending, betResults } = this.state
     return (
       <div className="main-container">
-      <AppBar position='static'>
-        <Toolbar className="toolBar">
-          <Typography variant="title" className="toolBarText" variant="h4">
-             ZeroS Dice - The destiny is in your hand
-          </Typography>
-        </Toolbar>
-      </AppBar>
+        <AppBar position='static'>
+          <Toolbar className="toolBar">
+            <Typography variant="h4" className="toolBarText">
+              ZeroS Dice - The destiny is in your hand
+            </Typography>
+          </Toolbar>
+        </AppBar>
 
         <div className="main-container-content">
           <h1>Bet for your best number and win huge amounts of Ether</h1>
@@ -229,7 +236,7 @@ export default class App extends React.Component {
           {pending &&
             <div>
               <p>
-                <img src={require('./assets/images/loading.svg')} width='70px' />
+                <img src={require('./assets/images/loading.svg')} width='70px' alt='loading' />
               </p>
               <span className='bet-edge-house' style={{color: '#d1ffe6'}}>Waiting for another bet of edge house......</span>
             </div>
