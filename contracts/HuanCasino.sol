@@ -33,6 +33,11 @@ contract HuanCasino {
   // Event watch when player win
   event Won(bool _status, address _address, uint _amount);
 
+  modifier onlyOwner() {
+    require(msg.sender == owner);
+    _;
+  }
+
   constructor(uint256 _minimumBet) public payable {
     owner = msg.sender;
     if (_minimumBet != 0) 
@@ -45,6 +50,13 @@ contract HuanCasino {
   function kill() public {
     if (msg.sender == owner) 
       selfdestruct(owner);
+  }
+
+  /// @notice The Bookie can withdraw money from the table
+  /// @return bool Returns true if withdraw success
+  function withdraw() public onlyOwner returns(bool) {
+    owner.transfer(address(this).balance);
+    return true;
   }
 
   /// @notice Check if a player exists in the current game
@@ -107,12 +119,14 @@ contract HuanCasino {
       delete playerInfo[playerAddress];
     }
 
-    uint256 winnerEtherAmount = totalBet/winners.length;
+    if (countWin != 0) {
+      uint256 winnerEtherAmount = totalBet/countWin;
 
-    for (uint256 j = 0; j < winners.length; j++){
-      if (winners[j] != address(0)) {
-        winners[j].transfer(winnerEtherAmount);
-        emit Won(true, winners[j], winnerEtherAmount);
+      for (uint256 j = 0; j < countWin; j++){
+        if (winners[j] != address(0)) {
+          winners[j].transfer(winnerEtherAmount);
+          emit Won(true, winners[j], winnerEtherAmount);
+        }
       }
     }
 

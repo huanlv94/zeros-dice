@@ -95,10 +95,15 @@ export default class App extends React.Component {
   }
 
   fetchAccounts() {
-    const { web3 } = this.state
+    const { web3, casinoInstance } = this.state
+
     web3.eth.getAccounts((error, accounts) =>
       this.setState({ accounts })
     )
+
+    casinoInstance.owner().then(result => {
+      this.setState({ contractOwner: result })
+    })
   }
   // Listen for events and executes the voteNumber method
   setupListeners() {
@@ -119,7 +124,7 @@ export default class App extends React.Component {
     }
   }
 
-  watchResultBet() {
+  async watchResultBet() {
     const {
       casinoInstance,
       betResults,
@@ -187,8 +192,31 @@ export default class App extends React.Component {
     return parseFloat(result)
   }
 
+  withdraw() {
+    const { casinoInstance } = this.state
+    casinoInstance.withdraw({
+      gas: 300000,
+      from: this.state.accounts[0]
+    }).then(result => {
+      alert('Withdraw success!!')
+    }).catch(e => {
+      alert('You can not withdraw money from this game!')
+    })
+  }
+
+  checkOwner() {
+    const { contractOwner, accounts } = this.state
+    if (contractOwner !== undefined && accounts !== undefined) {
+      if (accounts[0] == undefined) return false
+      return (accounts[0].toLocaleLowerCase() === contractOwner.toLocaleLowerCase())
+    } else {
+      return false
+    }
+  }
+
   render() {
     const { pending, betResults } = this.state
+
     return (
       <div className="main-container">
         <AppBar position='static'>
@@ -221,6 +249,11 @@ export default class App extends React.Component {
             <b>Max amount of bets:</b> &nbsp;
             <span>{this.state.maxAmountOfBets || 'Unlimited'}</span>
           </div>
+          {this.checkOwner() &&
+            <p>
+              <button type='button' onClick={() => this.withdraw()}>Withdraw</button>
+            </p>
+          }
           <hr/>
           <h2>Vote for the next number</h2>
           <label>
@@ -255,7 +288,7 @@ export default class App extends React.Component {
               {betResults.map((result, key) =>
                 <div className='bet-result' key={key}>
                   <p>{result.args._status ? 'YOU WON' : 'YOU LOSE'}</p>
-                  <p>Won amount: {this.parseWeiToEth(result.args._amount)} ETH.</p>
+                  <p>Won amount: {this.parseWeiToEth(result.args._amount)} ether.</p>
                 </div>
               )}
             </div>
