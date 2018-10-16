@@ -22,7 +22,7 @@ export default class App extends React.Component {
       betResults: []
     }
 
-    window.currentState = this.state
+    window.initialState = this.state
   }
 
   componentDidMount() {
@@ -54,11 +54,14 @@ export default class App extends React.Component {
       const casinoInstance = instance
       this.setState({ casinoInstance })
       this.fetchAccounts()
-      this.updateState()
+      this.updateGameInfos()
+    }).catch(error => {
+      alert('Setup smart contract failure!')
+      console.log(error)
     })
   }
 
-  updateState() {
+  updateGameInfos() {
     const { web3, casinoInstance } = this.state
 
     casinoInstance.minimumBet().then((result) => {
@@ -143,10 +146,11 @@ export default class App extends React.Component {
             this.setState({ pending: false })
         }
       }
+      this.updateGameInfos()
     })
   }
 
-  voteNumber(number) {
+  async voteNumber(number) {
     let bet = this.refs['ether-bet'].value
     const {
       web3,
@@ -160,15 +164,20 @@ export default class App extends React.Component {
       this.callbackVoteNumber()
     } else {
       this.setState({ pending: true })
-      casinoInstance.bet(number, {
+      await casinoInstance.bet(number, {
         gas: 300000,
         from: this.state.accounts[0],
         value: web3.utils.toWei(bet.toString(), 'ether')
-      }).then((result) => {
+      }).then(result => {
         if (result)
-          this.callbackVoteNumber()
           this.watchResultBet()
+      }).catch(e => {
+        this.setState({ pending: false })
+        alert('Vote number error! Please check again.')
+        console.log(e.message)
       })
+      this.updateGameInfos()
+      this.callbackVoteNumber()
     }
   }
 
