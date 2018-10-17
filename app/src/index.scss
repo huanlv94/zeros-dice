@@ -1,0 +1,337 @@
+body {
+  font-family: 'open sans';
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* NAVIGASTION */
+
+.toolBar {
+  background-color: #fff;
+}
+
+.toolBarText {
+  color: #000;
+  font-weight: bold;
+}
+
+ul {
+  list-style-type: none;
+
+  &.numberList {
+    padding-left: 0;
+    display: flex;
+    justify-content: space-around;
+
+    li {
+      padding: 40px;
+      border: 2px solid #7600f7;
+      margin-right: 5px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #7600f7;
+
+      &:hover {
+        background-color: #8a00ff;
+        color: #ffffff;
+      }
+
+      &:active {
+        background-color: #8a00ff;
+        color: #88e7f3;
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+.background-container {
+  background: #443958;
+  // background: url('./assets/images/casino-background.jpg') no-repeat;
+  background-size: 100%;
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
+  /* -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px); */
+}
+
+.main-container {
+  width: 100%;
+  height: auto;
+  text-align: center;
+  min-height: 100vh;
+
+  &:before {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+  }
+
+  h1 {
+    color: #fff;
+  }
+}
+
+.main-container-content {
+  margin-left: 20px;
+  margin-right: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  line-height: 30px;
+}
+
+.number-selected {
+  background-color: #8a00ff;
+  color: #88e7f3 !important;
+  opacity: 0.7;
+}
+
+.bet-input {
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid lightgrey;
+  font-size: 15pt;
+  margin: 0 10px;
+}
+
+.numberList {
+  margin-top: 30px;
+  margin-top: 30px;
+  background: #fff;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.container-bet-result {
+  text-align: center;
+  padding-bottom: 10px;
+  color: #ff00c4;
+}
+
+.bet-result {
+  width: 400px;
+  text-align: center;
+  margin: auto;
+  border: solid 1px #ffffff;
+  color: #fff;
+  margin-bottom: 7px;
+}
+
+@media (max-width: 1100px) {
+  ul {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  li {
+    margin: 5px 0;
+  }
+}
+
+.game-infomation {
+  width: 100%;
+  float: left;
+  margin-bottom: 20px;
+}
+
+/*** Theme ***/
+
+$color1: #5271C2;
+$color2: #35a541;
+$color3: #bdb235;
+$color4: #db6623;
+$color5: #3e5eb3;
+$color6: #aa9e5c;
+
+@function longshadow($color_a, $color_b, $stepnum, $opacity: 1) {
+  $gradient_steps: null;
+
+  @for $i from 1 through $stepnum {
+    $weight: (($i - 1) / $stepnum) * 100;
+    $colour_mix: mix($color_b, rgba($color_a, $opacity), $weight);
+    $seperator: null;
+
+    @if($i !=$stepnum) {
+      $seperator: #{','};
+    }
+
+    $gradient_steps: append(#{$gradient_steps}, #{$i}px #{$i}px $colour_mix $seperator);
+  }
+
+  @return $gradient_steps;
+}
+
+@mixin easeOut {
+  transition: all .6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.card-info {
+  width: 100%;
+  margin: 0 auto;
+  // overflow-x: hidden;
+}
+
+.card {
+    float: left;
+    position: relative;
+    width: calc(100% * .15 - 30px + .15 * 30px);
+    height: 200px;
+    /* margin: 0 30px 30px 0; */
+    -webkit-perspective: 1000;
+    perspective: 1000;
+    margin-left: 10px;
+
+  &:first-child {
+    .card__front {
+      background: $color1;
+    }
+
+    .card__num {
+      text-shadow: longshadow(darken($color1, 15%), $color1, 100, 0.8);
+    }
+  }
+
+  &:nth-child(2) {
+    .card__front {
+      background: $color2;
+    }
+
+    .card__num {
+      text-shadow: longshadow(darken($color2, 15%), $color2, 100, 0.8);
+    }
+  }
+
+  &:nth-child(3) {
+    margin-right: 0;
+
+    .card__front {
+      background: $color3;
+    }
+
+    .card__num {
+      text-shadow: longshadow(darken($color3, 15%), $color3, 100, 0.8);
+    }
+  }
+
+  &:nth-child(4) {
+    .card__front {
+      background: $color4;
+    }
+
+    .card__num {
+      text-shadow: longshadow(darken($color4, 15%), $color4, 100, 0.8);
+    }
+  }
+
+  &:nth-child(5) {
+    .card__front {
+      background: $color5;
+    }
+
+    .card__num {
+      text-shadow: longshadow(darken($color5, 15%), $color5, 100, 0.8);
+    }
+  }
+
+  &:nth-child(6) {
+    .card__front {
+      background: $color6;
+    }
+
+    .card__num {
+      text-shadow: longshadow(darken($color6, 15%), $color6, 100, 0.8);
+    }
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &__flipper {
+    cursor: pointer;
+    transform-style: preserve-3d;
+    @include easeOut;
+  }
+
+  &__front,
+  &__back {
+    position: absolute;
+    backface-visibility: hidden;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+  }
+
+  &__front {
+    transform: rotateY(0);
+    z-index: 2;
+    overflow: hidden;
+  }
+
+  &__back {
+    transform: rotateY(180deg) scale(1.1);
+    background: lighten(black, 8);
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(black, 0.3);
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &__name {
+    font-size: 20px;
+    line-height: 0.9;
+    font-weight: 700;
+
+    span {
+      font-size: 12px;
+    }
+  }
+
+  &__num {
+    font-size: 50px;
+    margin: 0 8px 0 0;
+    font-weight: 700;
+
+    @media (max-width: 700px) {
+      font-size: 30px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    width: 100%;
+    height: 200px;
+    margin-right: 0;
+    float: none;
+
+    .card__front,
+    .card__back {
+      height: 200px;
+    }
+  }
+}

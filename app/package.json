@@ -26,6 +26,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "node-sass": "^4.9.4",
+    "sass-loader": "^7.1.0",
     "string_decoder": "^1.1.1",
     "truffle": "^4.1.14",
     "truffle-contract": "^3.0.6",

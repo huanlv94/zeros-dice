@@ -218,9 +218,10 @@ export default class App extends React.Component {
     const { pending, betResults } = this.state
 
     return (
-      <div className="main-container">
+      <div className="main-container background-container">
         <AppBar position='static'>
           <Toolbar className="toolBar">
+            <img src={require('./assets/images/dice.png')} width='40px' />
             <Typography variant="h4" className="toolBarText">
               ZeroS Dice - The destiny is in your hand
             </Typography>
@@ -229,26 +230,51 @@ export default class App extends React.Component {
 
         <div className="main-container-content">
           <h1>Bet for your best number and win huge amounts of Ether</h1>
-          <div className="block">
-            <b>Number of bets:</b> &nbsp;
-            <span>{this.state.numberOfBets}</span>
+          <div className='game-infomation'>
+            <ul className='card-info'>
+              <li className="card">
+                <div className="card__flipper">
+                  <div className="card__front">
+                    <p className="card__name"><span>Number of bets</span></p>
+                    <p className="card__num">{this.state.numberOfBets}</p>
+                  </div>
+                </div>
+              </li>
+              <li className="card">
+                <div className="card__flipper">
+                  <div className="card__front">
+                    <p className="card__name"><span>Last number winner</span></p>
+                    <p className="card__num">{this.state.lastWinner}</p>
+                  </div>
+                </div>
+              </li>
+              <li className="card">
+                <div className="card__flipper">
+                  <div className="card__front">
+                    <p className="card__name"><span>Total ether bet (ether)</span></p>
+                    <p className="card__num">{this.state.totalBet}</p>
+                  </div>
+                </div>
+              </li>
+              <li className="card">
+                <div className="card__flipper">
+                  <div className="card__front">
+                    <p className="card__name"><span>Minimum bet (ether)</span></p>
+                    <p className="card__num">{this.state.minimumBet}</p>
+                  </div>
+                </div>
+              </li>
+              <li className="card">
+                <div className="card__flipper">
+                  <div className="card__front">
+                    <p className="card__name"><span>Max amount of bets (ether)</span></p>
+                    <p className="card__num">{this.state.maxAmountOfBets || 'Infinity'}</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
-          <div className="block">
-            <b>Last number winner:</b> &nbsp;
-            <span>{this.state.lastWinner}</span>
-          </div>
-          <div className="block">
-            <b>Total ether bet:</b> &nbsp;
-            <span>{this.state.totalBet} ether</span>
-          </div>
-          <div className="block">
-            <b>Minimum bet:</b> &nbsp;
-            <span>{this.state.minimumBet} ether</span>
-          </div>
-          <div className="block">
-            <b>Max amount of bets:</b> &nbsp;
-            <span>{this.state.maxAmountOfBets || 'Unlimited'}</span>
-          </div>
+
           {this.checkOwner() &&
             <p>
               <button type='button' onClick={() => this.withdraw()}>Withdraw</button>
@@ -261,16 +287,16 @@ export default class App extends React.Component {
           <br/>
           </label>
           <ul ref="numbers" className="numberList">
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-            <li>6</li>
-            <li>7</li>
-            <li>8</li>
-            <li>9</li>
-            <li>10</li>
+            <li className='numberic'>1</li>
+            <li className='numberic'>2</li>
+            <li className='numberic'>3</li>
+            <li className='numberic'>4</li>
+            <li className='numberic'>5</li>
+            <li className='numberic'>6</li>
+            <li className='numberic'>7</li>
+            <li className='numberic'>8</li>
+            <li className='numberic'>9</li>
+            <li className='numberic'>10</li>
           </ul>
         </div>
         <div className='container-bet-result'>
