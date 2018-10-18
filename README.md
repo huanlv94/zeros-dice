@@ -1,11 +1,14 @@
 # The simple game with blockchain
 Casino game in blockchain with solidity
 
-# How it work?
+# Already deploy on
+https://zeros-team.github.io/zeros-dice/?fbclid=IwAR3ZUR8ek5JnMmK8dCaYYrPTGzBeF4D8WsIwaE63tl7FTlEy9Uwg10fV67Q
+
+# Run locally?
   ```
     cd app & yarn install
     yarn start
   ```
   Visit `http://localhost:8080`
 
-  - This game current only available on ropsten testnet.
+  - This game currently is availble on Ropsten and Rinkeby testnet.
